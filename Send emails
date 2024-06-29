@@ -1,0 +1,39 @@
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+
+def send_email():
+    # Set up SMTP connection
+    smtp = smtplib.SMTP('smtp.gmail.com', 587)
+    smtp.ehlo()
+    smtp.starttls()
+    smtp.login('YourMail@gmail.com', 'Your Password')
+
+    # Create the email message
+    msg = MIMEMultipart()
+    msg['Subject'] = 'Your Subject Here'
+    msg.attach(MIMEText('Your email content goes here'))
+
+    # Attach an image
+    img_data = open('path/to/image.jpg', 'rb').read()
+    msg.attach(MIMEImage(img_data, name='image.jpg'))
+
+    # Attach multiple files
+    with open('path/to/file1.txt', 'rb') as f:
+        file1 = MIMEApplication(f.read(), name='file1.txt')
+        file1['Content-Disposition'] = 'attachment; filename="file1.txt"'
+        msg.attach(file1)
+
+    # Specify recipient email addresses
+    to = ['klm@gmail.com', 'xyz@gmail.com', 'abc@gmail.com']
+
+    # Send the email
+    smtp.sendmail(from_addr='YourLoginEmail', to_addrs=to, msg=msg.as_string())
+
+    # Close the connection
+    smtp.quit()
+
+# Call the function to send the email
+send_email()
