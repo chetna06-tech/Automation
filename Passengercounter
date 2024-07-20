@@ -1,0 +1,42 @@
+import React, { useState } from 'react';
+import { PlusCircle, MinusCircle, RotateCcw } from 'lucide-react';
+
+const PassengerCounter = () => {
+  const [count, setCount] = useState(0);
+
+  const increment = () => setCount(prev => prev + 1);
+  const decrement = () => setCount(prev => Math.max(0, prev - 1));
+  const reset = () => setCount(0);
+
+  return (
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold mb-4 text-center">Passenger Counter</h1>
+        <div className="text-6xl font-bold text-center mb-8">{count}</div>
+        <div className="flex justify-center space-x-4">
+          <button
+            onClick={decrement}
+            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+          >
+            <MinusCircle size={24} />
+          </button>
+          <button
+            onClick={increment}
+            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+          >
+            <PlusCircle size={24} />
+          </button>
+        </div>
+        <button
+          onClick={reset}
+          className="mt-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded w-full flex items-center justify-center"
+        >
+          <RotateCcw size={18} className="mr-2" />
+          Reset
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default PassengerCounter;
